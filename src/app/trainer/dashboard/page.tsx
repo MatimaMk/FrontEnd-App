@@ -1,4 +1,5 @@
 "use client"
+import DashLayoutComponent from '@/components/dashboardLayout/page';
 import { useFoodItemsActions, useFoodItemState } from '@/providers/foodItemProvider';
 import { Alert, Card, Spin } from 'antd';
 import React, { useEffect } from 'react'
@@ -12,17 +13,24 @@ export const Dashboard = () => {
   }, []);
 
   if (isPending) {
-    return <div> <Spin tip="Loading..." size="large" >
-    <Alert
-      message="fetching all the Food Items"
-      description="please wait this fetching all the items."
-      type="info"
-    />
-  </Spin>
-</div>;
-
-  
-   
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <Spin tip="Loading..." size="large">
+          <Alert
+            message="Fetching all the Food Items"
+            description="Please wait, fetching all the items."
+            type="info"
+          />
+        </Spin>
+      </div>
+    );
   }
 
   if (isError) {
@@ -39,6 +47,8 @@ export const Dashboard = () => {
       gap: '16px',
       gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))'
     }}>
+
+      <DashLayoutComponent />
       {foodItems.map((item) => (
         <Card key={item.category} cover={
           <img alt={item.name} src={'/path/to/food-image.jpg'} 

@@ -35,7 +35,7 @@ export default function RootLayout({
         <FoodProvider>
         {children}
       </FoodProvider>
- </AuthTrainerProvider>
+     </AuthTrainerProvider>
       </body>
    
     </html>
