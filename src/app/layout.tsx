@@ -1,6 +1,9 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "./globals.css"
+import { FoodProvider } from "@/providers/foodItemProvider";
+import { AuthTrainerProvider } from "@/providers/authProvider/trainer";
 
 
 const geistSans = Geist({
@@ -27,7 +30,12 @@ export default function RootLayout({
     <html lang="en">
     
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+
+      <AuthTrainerProvider>
+        <FoodProvider>
         {children}
+      </FoodProvider>
+ </AuthTrainerProvider>
       </body>
    
     </html>
