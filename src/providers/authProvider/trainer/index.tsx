@@ -2,12 +2,16 @@
 import { useContext, useReducer } from "react";
 import { AuthTrainerReducer } from "./reducer";
 import {
+  ILogins,
   INITIAL_STATE,
   ITrainerRegis,
   regisTrainActionContext,
   regisTrainStateContext,
 } from "./context";
 import {
+  loginTError,
+  loginTPending,
+  loginTSuccess,
   regisTrainerError,
   regisTrainerPending,
   regisTrainerSucess,
@@ -44,6 +48,31 @@ export const AuthTrainerProvider = ({
       });
   };
 
+  const login = async (payload: ILogins) => {
+    // Dispatch pending action before API call
+    dispatch(loginTPending());
+  
+    const endpoint = "https://body-vault-server-b9ede5286d4c.herokuapp.com/api/users/login";
+  
+    await axios
+      .post(endpoint, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        const message = `User logged in successfully, user ID: ${response.data.ID}`;
+        console.log(message);
+        dispatch(loginTSuccess(response.data)  );
+      })
+      .catch((error) => {
+        console.error("Error during login:", error);
+        // Dispatch error action API call
+        dispatch(loginTError());
+      });
+  };
+  
+  
   return (
     <regisTrainStateContext.Provider value={state}>
       <regisTrainActionContext.Provider value={{ RegisterTrainer }}>
