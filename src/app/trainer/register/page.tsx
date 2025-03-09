@@ -7,7 +7,7 @@ import {
   useRegisterActionState,
 } from "@/providers/authProvider/trainer";
 import "@ant-design/v5-patch-for-react-19";
-import { useStyles } from "./registration/style/style";
+import { useStyles } from "../registration/style/style";
 
 const Register = () => {
   const { isSuccess, isPending, isError } = useRegisterState();

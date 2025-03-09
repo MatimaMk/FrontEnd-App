@@ -34,7 +34,7 @@ export default function Home() {
                 </p>
 
                 <div style={{ display: "flex", gap: "10px" }}>
-                  <Button type="primary" href="./trainer" target="_blank">
+                  <Button type="primary" href="/trainer/register" target="_blank">
                     Register
                   </Button>
                   <Button
