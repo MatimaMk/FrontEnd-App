@@ -34,6 +34,7 @@ const Register = () => {
   };
 
   return (
+    
     <div style={{ display: "flex", height: "100vh", alignItems: "center" }}>
       {/* Left Section: Image */}
       <div

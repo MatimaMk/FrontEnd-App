@@ -1,13 +1,14 @@
 "use client";
 import styles from "./page.module.css";
-import { AuthTrainerProvider } from "@/providers/authProvider/trainer";
 import Button from "antd/es/button";
 import { Card, Flex, Typography } from "antd";
 
+
 export default function Home() {
   return (
+    
     <div className={styles.page}>
-      <AuthTrainerProvider>
+     
         <main className={styles.main}>
           <Card
             styles={{
@@ -38,7 +39,7 @@ export default function Home() {
                   </Button>
                   <Button
                     type="primary"
-                    href="https://ant.design"
+                    href="/trainer/dashboard"
                     target="_blank"
                   >
                     Login
@@ -48,8 +49,12 @@ export default function Home() {
             </Flex>
           </Card>
         </main>
-      </AuthTrainerProvider>
+
+      
       <footer className={styles.footer}></footer>
     </div>
+    
+    
+
   );
 }
