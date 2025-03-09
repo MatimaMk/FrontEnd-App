@@ -1,32 +1,59 @@
 "use client";
-import { Button, Card, Form, FormProps, Input } from "antd";
+
+import {
+  Button,
+  Card,
+  Checkbox,
+  CheckboxProps,
+  Form,
+  FormProps,
+  Input,
+  message,
+} from "antd";
 import { ITrainerRegis } from "@/providers/authProvider/trainer/context";
 import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import {
-  useRegisterState,
-  useRegisterActionState,
+  useTrainerAuthState,
+  useAuthActionState,
 } from "@/providers/authProvider/trainer";
 import "@ant-design/v5-patch-for-react-19";
 import { useStyles } from "../registration/style/style";
+import bcrypt from "bcryptjs";
 
 const Register = () => {
-  const { isSuccess, isPending, isError } = useRegisterState();
-  const { RegisterTrainer } = useRegisterActionState();
+  const { isSuccess, isPending, isError } = useTrainerAuthState();
+  const { RegisterTrainer } = useAuthActionState();
   const { styles } = useStyles();
 
+  const onChange: CheckboxProps["onChange"] = (e) => {
+    console.log(`checked = ${e.target.checked}`);
+  };
+
   if (isPending) {
-    <div>loading...</div>;
+    return <div>loading...</div>;
   }
 
   if (isError) {
-    <div>failed...</div>;
+    return <div>failed...</div>;
   }
 
   const onFinish: FormProps<ITrainerRegis>["onFinish"] = async (
     values: ITrainerRegis
   ) => {
     if (RegisterTrainer) {
-      RegisterTrainer(values);
+      const hashedPassword = await bcrypt.hash(values.password, 12);
+      const trainerData: ITrainerRegis = {
+        name: values.name,
+        email: values.email,
+        password: hashedPassword,
+        confirmPassword: "",
+        role: "admin",
+        playType: "base",
+        activeState: true,
+        trial: false,
+        policiesAccepted: values.policiesAccepted,
+      };
+      RegisterTrainer(trainerData);
       if (isSuccess) {
         alert("Registration successful");
       }
@@ -34,7 +61,6 @@ const Register = () => {
   };
 
   return (
-    
     <div style={{ display: "flex", height: "100vh", alignItems: "center" }}>
       {/* Left Section: Image */}
       <div
@@ -47,11 +73,9 @@ const Register = () => {
       ></div>
 
       {/* Right Section: Register Form */}
-
       <div className={styles.card_div}>
         <Card className={styles.card}>
           <h1 className={styles.title}>Register</h1>
-
           <Form
             name="basic"
             labelCol={{ span: 8 }}
@@ -62,21 +86,21 @@ const Register = () => {
             autoComplete="off"
           >
             <Form.Item<ITrainerRegis>
-              label="Username"
-              name="username"
+              label="username"
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
             >
               <Input
-                minLength={6}
+                name="name"
+                minLength={2}
+                maxLength={30}
                 placeholder="username"
                 prefix={<UserOutlined />}
-                className={styles.input} /* Applied the input style */
-                allowClear
+                className={styles.input}
+                /* Applied the input style */ allowClear
               />
             </Form.Item>
-
             <Form.Item<ITrainerRegis>
               label="Email"
               name="email"
@@ -91,35 +115,67 @@ const Register = () => {
               <Input
                 placeholder="email"
                 prefix={<MailOutlined />}
-                className={styles.input} /* Applied the input style */
-                allowClear
+                className={styles.input}
+                /* Applied the input style */ allowClear
               />
             </Form.Item>
-
             <Form.Item<ITrainerRegis>
               label="Password"
               name="password"
               rules={[
                 { required: true, message: "Please input your password!" },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value) {
+                      return Promise.resolve();
+                    }
+                    if (value.length < 8) {
+                      return Promise.reject(
+                        new Error("Password must be at least 8 characters")
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                }),
               ]}
             >
               <Input.Password
                 placeholder="password"
-                minLength={8}
                 prefix={<LockOutlined />}
-                className={styles.input} /* Applied the input style */
-                allowClear
+                className={styles.input}
+                /* Applied the input style */ allowClear
               />
             </Form.Item>
-
+            <Form.Item<ITrainerRegis>
+              label="confirm Password"
+              name="confirmPassword"
+              rules={[
+                { required: true, message: "Please confirm your password!" },
+              ]}
+            >
+              <Input.Password
+                placeholder="confirm Password"
+                prefix={<LockOutlined />}
+                className={styles.input}
+                /* Applied the input style */ allowClear
+              />
+            </Form.Item>
+            <Form.Item
+              name="policiesAccepted"
+              valuePropName="checked"
+              rules={[
+                { required: true, message: "Please accept the policies!" },
+              ]}
+            >
+              <Checkbox onChange={onChange}>Accept Policies</Checkbox>
+            </Form.Item>
             <Button type="primary" htmlType="submit" className={styles.button}>
               Register
             </Button>
           </Form>
-
           <p className={styles.paragraph}>
             Already have an account?{" "}
-            <a href="#" className={styles.link}>
+            <a href="/trainer/login" className={styles.link}>
               Login
             </a>
           </p>

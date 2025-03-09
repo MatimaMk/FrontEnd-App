@@ -3,12 +3,12 @@ import { createContext } from "react";
 
 // Interface defining the shape of a Trainer object
 export interface ITrainerRegis {
-  username: string,
+  name: string,
   email: string,
   password: string,
   confirmPassword: string,
-  role: 'admin',
-  playType: 'base',
+  role: string,
+  playType: string,
   activeState:true,
   trial: false,
   policiesAccepted:boolean,
