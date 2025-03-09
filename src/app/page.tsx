@@ -39,18 +39,23 @@ export default function Home() {
                   </Button>
                   <Button
                     type="primary"
-                    href="/trainer/dashboard"
+                    href="/trainer/login"
                     target="_blank"
                   >
                     Login
+                  </Button>
+                  <Button
+                    type="primary"
+                    href="/trainer/dashboard"
+                    target="_blank"
+                  >
+                    TestingGet
                   </Button>
                 </div>
               </Flex>
             </Flex>
           </Card>
         </main>
-
-      
       <footer className={styles.footer}></footer>
     </div>
     

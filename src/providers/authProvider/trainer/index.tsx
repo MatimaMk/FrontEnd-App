@@ -82,7 +82,7 @@ export const AuthTrainerProvider = ({
   );
 };
 
-function useRegisterState() {
+function useTrainerAuthState() {
   const context = useContext(regisTrainStateContext);
   if (!context) {
     throw new Error(
@@ -92,7 +92,7 @@ function useRegisterState() {
   return context;
 }
 
-function useRegisterActionState() {
+function useAuthActionState() {
   const context = useContext(regisTrainActionContext);
   if (!context) {
     throw new Error(
@@ -102,4 +102,4 @@ function useRegisterActionState() {
   return context;
 }
 
-export { useRegisterState, useRegisterActionState };
+export { useTrainerAuthState, useAuthActionState };
