@@ -19,6 +19,18 @@ export const AuthTrainerReducer = handleActions<
       ...state,
       ...action.payload,
     }),
+    [TrainerActionEnums.loginTrainerPending]: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    [TrainerActionEnums.loginTrainerSuccess]: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    [TrainerActionEnums.loginTrainerError]: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
   },
   INITIAL_STATE
 );
