@@ -4,7 +4,8 @@ import { useFoodItemsActions, useFoodItemState } from '@/providers/foodItemProvi
 import { Alert, Card, Spin } from 'antd';
 import React, { useEffect } from 'react'
 
-export const Dashboard = () => {
+const Dashboard = () => {
+  
   const { foodItems, isPending, isError } = useFoodItemState();
   const { getFoodItems } = useFoodItemsActions();
 

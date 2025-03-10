@@ -3,7 +3,6 @@ import styles from "./page.module.css";
 import Button from "antd/es/button";
 import { Card, Flex, Typography } from "antd";
 
-
 export default function Home() {
   return (
     
