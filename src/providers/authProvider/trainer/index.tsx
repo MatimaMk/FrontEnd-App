@@ -16,7 +16,7 @@ import {
   regisTrainerPending,
   regisTrainerSucess,
 } from "./actions";
-import axios from "axios";
+
 import { getAxiosInstace } from "@/utils/axiosInstance";
 
 export const AuthTrainerProvider = ({
@@ -26,8 +26,8 @@ export const AuthTrainerProvider = ({
 }) => {
   const [state, dispatch] = useReducer(AuthTrainerReducer, INITIAL_STATE);
   const instance = getAxiosInstace();
-  const RegisterTrainer = async (payload: ITrainerRegis) => {
 
+  const RegisterTrainer = async (payload: ITrainerRegis) => {
     // Dispatch pending action before API call
     dispatch(regisTrainerPending());
     const endpoint ="/api/users/register";
@@ -35,8 +35,7 @@ export const AuthTrainerProvider = ({
     .then((response)=>{
         dispatch(regisTrainerSucess(response.data));
     })
-    
-      
+
       .catch((error) => {
         console.error("Error during registration:", error);
         // Dispatch error action API call
@@ -47,19 +46,10 @@ export const AuthTrainerProvider = ({
   const login = async (payload: ILogins) => {
     // Dispatch pending action before API call
     dispatch(loginTPending());
-  
-    const endpoint = "https://body-vault-server-b9ede5286d4c.herokuapp.com/api/users/login";
-  
-    await axios
-      .post(endpoint, payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    const endpoint = "/api/users/login";
+    await instance.post(endpoint, payload)
       .then((response) => {
-        const message = `User logged in successfully, user ID: ${response.data.ID}`;
-        console.log(message);
-        dispatch(loginTSuccess(response.data)  );
+        dispatch(loginTSuccess(response.data));
       })
       .catch((error) => {
         console.error("Error during login:", error);
@@ -71,7 +61,7 @@ export const AuthTrainerProvider = ({
   
   return (
     <regisTrainStateContext.Provider value={state}>
-      <regisTrainActionContext.Provider value={{ RegisterTrainer }}>
+      <regisTrainActionContext.Provider value={{ RegisterTrainer, login }}>
         {children}
       </regisTrainActionContext.Provider>
     </regisTrainStateContext.Provider>

@@ -8,7 +8,7 @@ import {
   Form,
   FormProps,
   Input,
-  message,
+ 
 } from "antd";
 import { ITrainerRegis } from "@/providers/authProvider/trainer/context";
 import { UserOutlined, MailOutlined, LockOutlined, PhoneOutlined } from "@ant-design/icons";
@@ -18,7 +18,7 @@ import {
 } from "@/providers/authProvider/trainer";
 import "@ant-design/v5-patch-for-react-19";
 import { useStyles } from "../registration/style/style";
-import bcrypt from "bcryptjs";
+//import bcrypt from "bcryptjs";
 
 const Register = () => {
   const { isSuccess, isPending, isError } = useTrainerAuthState();
@@ -125,22 +125,10 @@ const Register = () => {
               name="password"
               rules={[
                 { required: true, message: "Please input your password!" },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value) {
-                      return Promise.resolve();
-                    }
-                    if (value.length < 5) {
-                      return Promise.reject(
-                        new Error("Password must be at least 8 characters")
-                      );
-                    }
-                    return Promise.resolve();
-                  },
-                }),
               ]}
             >
               <Input.Password
+              minLength={6}
                 placeholder="password"
                 prefix={<LockOutlined />}
                 className={styles.input}
