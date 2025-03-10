@@ -9,7 +9,7 @@ import axios from "axios";
 export const FoodProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(FoodItemReducer, INITIAL_STATE);
 
-  const token = 'yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Y2FhMWM3ZjQ4MzY0MDAxOTVkYTE2OCIsIm5hbWUiOiJ0ZXN0IHRyYWluZXIgMiIsInJvbGUiOiJhZG1pbiIsImZlYXR1cmVzIjpbXSwiaWF0IjoxNzQxMzM3NjAxLCJleHAiOjE3NDE5NDI0MDF9.JFQUc66Czls-WRAirbQ1usByTFWyoh9sJtIWt6IOByU';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Y2FhMWM3ZjQ4MzY0MDAxOTVkYTE2OCIsIm5hbWUiOiJ0ZXN0IHRyYWluZXIgMiIsInJvbGUiOiJhZG1pbiIsImZlYXR1cmVzIjpbXSwiaWF0IjoxNzQxMzM3NjAxLCJleHAiOjE3NDE5NDI0MDF9.JFQUc66Czls-WRAirbQ1usByTFWyoh9sJtIWt6IOByU';
 
   const getHeaders = () => ({
     headers: {

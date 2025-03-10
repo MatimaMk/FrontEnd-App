@@ -11,7 +11,7 @@ import {
   message,
 } from "antd";
 import { ITrainerRegis } from "@/providers/authProvider/trainer/context";
-import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, MailOutlined, LockOutlined, PhoneOutlined } from "@ant-design/icons";
 import {
   useTrainerAuthState,
   useAuthActionState,
@@ -41,14 +41,15 @@ const Register = () => {
     values: ITrainerRegis
   ) => {
     if (RegisterTrainer) {
-      const hashedPassword = await bcrypt.hash(values.password, 12);
+    //  const hashedPassword = await bcrypt.hash(values.password, 12);
       const trainerData: ITrainerRegis = {
         name: values.name,
         email: values.email,
-        password: hashedPassword,
-        confirmPassword: "",
+        password: values.password,
+        contactNumber: values.contactNumber,
+        confirmPassword: values.confirmPassword,
         role: "admin",
-        playType: "base",
+        planType: "base",
         activeState: true,
         trial: false,
         policiesAccepted: values.policiesAccepted,
@@ -86,19 +87,19 @@ const Register = () => {
             autoComplete="off"
           >
             <Form.Item<ITrainerRegis>
-              label="username"
+              label="name"
+               name="name"
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
             >
               <Input
-                name="name"
                 minLength={2}
                 maxLength={30}
-                placeholder="username"
+                placeholder="name"
                 prefix={<UserOutlined />}
                 className={styles.input}
-                /* Applied the input style */ allowClear
+                 allowClear
               />
             </Form.Item>
             <Form.Item<ITrainerRegis>
@@ -116,7 +117,7 @@ const Register = () => {
                 placeholder="email"
                 prefix={<MailOutlined />}
                 className={styles.input}
-                /* Applied the input style */ allowClear
+                allowClear
               />
             </Form.Item>
             <Form.Item<ITrainerRegis>
@@ -129,7 +130,7 @@ const Register = () => {
                     if (!value) {
                       return Promise.resolve();
                     }
-                    if (value.length < 8) {
+                    if (value.length < 5) {
                       return Promise.reject(
                         new Error("Password must be at least 8 characters")
                       );
@@ -143,7 +144,7 @@ const Register = () => {
                 placeholder="password"
                 prefix={<LockOutlined />}
                 className={styles.input}
-                /* Applied the input style */ allowClear
+                allowClear
               />
             </Form.Item>
             <Form.Item<ITrainerRegis>
@@ -157,7 +158,25 @@ const Register = () => {
                 placeholder="confirm Password"
                 prefix={<LockOutlined />}
                 className={styles.input}
-                /* Applied the input style */ allowClear
+                 allowClear
+              />
+            </Form.Item>
+            <Form.Item<ITrainerRegis>
+              label="Contact Number"
+              name="contactNumber"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your contact number!",
+                 
+                },
+              ]}
+            >
+              <Input
+                placeholder="Contact Number"
+                prefix={<PhoneOutlined />}
+                className={styles.input}
+                allowClear
               />
             </Form.Item>
             <Form.Item
