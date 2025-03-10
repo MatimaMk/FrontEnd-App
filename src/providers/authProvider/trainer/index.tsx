@@ -17,6 +17,7 @@ import {
   regisTrainerSucess,
 } from "./actions";
 import axios from "axios";
+import { getAxiosInstace } from "@/utils/axiosInstance";
 
 export const AuthTrainerProvider = ({
   children,
@@ -24,23 +25,18 @@ export const AuthTrainerProvider = ({
   children: React.ReactNode;
 }) => {
   const [state, dispatch] = useReducer(AuthTrainerReducer, INITIAL_STATE);
-
+  const instance = getAxiosInstace();
   const RegisterTrainer = async (payload: ITrainerRegis) => {
+
     // Dispatch pending action before API call
     dispatch(regisTrainerPending());
-    const endpoint =
-      "https://body-vault-server-b9ede5286d4c.herokuapp.com/api/users/register";
-    await axios
-      .post(endpoint, payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        const message = `Trainer registered successfully, trainer ID: ${response.data.ID}`;
-        console.log(message);
+    const endpoint ="/api/users/register";
+    await instance.post(endpoint, payload) 
+    .then((response)=>{
         dispatch(regisTrainerSucess(response.data));
-      })
+    })
+    
+      
       .catch((error) => {
         console.error("Error during registration:", error);
         // Dispatch error action API call
