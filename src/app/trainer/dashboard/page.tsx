@@ -1,78 +1,111 @@
 "use client"
-import DashLayoutComponent from '@/components/dashboardLayout/page';
-import { useFoodItemsActions, useFoodItemState } from '@/providers/foodItemProvider';
-import { Alert, Card, Spin } from 'antd';
-import React, { useEffect } from 'react'
+import { Alert,  Spin } from 'antd';
+import React, { useEffect, useState } from 'react'
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+} from '@ant-design/icons';
+import { Button, Layout, Menu, theme } from 'antd';
+import { useFoodItemState, useFoodItemsActions } from '@/providers/foodItemProvider';
 
-const Dashboard = () => {
-  
+const { Header, Sider, Content } = Layout;
+
+const Dashboard: React.FC = () => {
+
+  const [collapsed, setCollapsed] = useState(false);
   const { foodItems, isPending, isError } = useFoodItemState();
-  const { getFoodItems } = useFoodItemsActions();
+   const { getFoodItems } = useFoodItemsActions();  
+
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
   useEffect(() => {
     getFoodItems();
   }, []);
+  
 
   if (isPending) {
     return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-        }}
-      >
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
         <Spin tip="Loading..." size="large">
-          <Alert
-            message="Fetching all the Food Items"
-            description="Please wait, fetching all the items."
-            type="info"
-          />
+          <Alert message="Fetching all the Food Items" description="Please wait, fetching all the items." type="info" />
         </Spin>
       </div>
     );
   }
-
+  
+  // error status
   if (isError) {
     return <div>Error loading products!</div>;
   }
 
-  if (!foodItems || foodItems.length === 0) {
+  // if there are no product
+  if (!foodItems || Object.keys(foodItems).length === 0) {
     return <div>No products found</div>;
   }
-
   return (
-    <div style={{
-      display: 'grid',
-      gap: '16px',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))'
-    }}>
+    <Layout>
+      <Sider trigger={null} collapsible collapsed={collapsed}>
+        <div className="demo-logo-vertical" />
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={['1']}
+          items={[
+            {
+              key: '1',
+              icon: <UserOutlined />,
+              label: 'nav 1',
+            },
+            {
+              key: '2',
+              icon: <VideoCameraOutlined />,
+              label: 'nav 2',
+            },
+            {
+              key: '3',
+              icon: <UploadOutlined />,
+              label: 'nav 3',
+            },
+          ]}
+        />
+      </Sider>
+      <Layout>
+        <Header style={{ padding: 0, background: colorBgContainer }}>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              fontSize: '16px',
+              width: 64,
+              height: 64,
+            }}
+          />
+        </Header>
+        <Content
+          style={{
+            margin: '24px 16px',
+            padding: 24,
+            minHeight: 280,
+            background: colorBgContainer,
+            borderRadius: borderRadiusLG,
+          }}
+        >
+ 
 
-      <DashLayoutComponent />
-      {foodItems.map((item) => (
-        <Card key={item.category} cover={
-          <img alt={item.name} src={'/path/to/food-image.jpg'} 
-            style={{ height: 200, objectFit: 'cover' }} />
-        }>
-          <div>
-            <h3>{item.name}</h3>
-            <p>Category: {item.category}</p>
-            <p>Serving Size: {item.servingsize}g</p>
-            <p>Protein: {item.protein}g</p>
-            <p>Carbs: {item.carbs}g</p>
-            <p>Sugar: {item.sugar}g</p>
-            <p>Fat: {item.fat}g</p>
-            <p>Fiber: {item.fiber}g</p>
-            <p>Sodium: {item.sodium}mg</p>
-            <p>Potassium: {item.potassium}mg</p>
-            <p>Cholesterol: {item.cholesterol}mg</p>
-            <p>Energy: {item.energy}kcal</p>
-          </div>
-        </Card>
-      ))}
-    </div>
+        </Content>
+        
+      </Layout>
+    </Layout>
   );
 };
 
 export default Dashboard;
+
+
+

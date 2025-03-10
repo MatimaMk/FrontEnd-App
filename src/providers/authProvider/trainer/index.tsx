@@ -46,14 +46,16 @@ export const AuthTrainerProvider = ({
   const login = async (payload: ILogins) => {
     // Dispatch pending action before API call
     dispatch(loginTPending());
+  
     const endpoint = "/api/users/login";
     await instance.post(endpoint, payload)
       .then((response) => {
+        const token = response.data.token; // Extract the token from the response
+        localStorage.setItem("token", token); // Store the token in local storage
         dispatch(loginTSuccess(response.data));
       })
       .catch((error) => {
         console.error("Error during login:", error);
-        // Dispatch error action API call
         dispatch(loginTError());
       });
   };
