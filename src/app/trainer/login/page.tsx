@@ -8,12 +8,14 @@ import {
   useAuthActionState,
 } from "@/providers/authProvider/trainer";
 import { ILogins } from "@/providers/authProvider/trainer/context";
-import { redirect } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
   const { isSuccess, isPending, isError } = useTrainerAuthState();
   const { login } = useAuthActionState();
   const { styles } = useStyles();
+  const router = useRouter();
+
 
   if (isPending) {
     return <div>loading...</div>;
@@ -25,15 +27,14 @@ const Login = () => {
 
   const onFinish = async (payload: ILogins) => {
     if (login) {
-      try {
+  
         await login(payload);
         if (isSuccess) {
-          redirect("trainer/dashboard");
+          alert("sucessfully looged in")
+          router.push("/trainer/dashboard")
+         
         }
-      } catch (error) {
-       console.log(error)
-        alert("Login failed");
-      }
+
     }
   };
   return (

@@ -3,7 +3,7 @@ import { createContext } from "react";
 
 // Interface defining the shape of a foodItem object
 export interface IFood {
-      
+       id?:string,
         name:string,
         category: string,
         servingsize:number,
