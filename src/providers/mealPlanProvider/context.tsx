@@ -2,7 +2,7 @@
 import { createContext } from "react";
 
 export interface IMealPlan {
-      
+    id?:number, 
     name:string,
     client: string, //must receive the ID
     Trainer:string, // must receive trainer Id
@@ -11,12 +11,17 @@ export interface IMealPlan {
     notes:string,
     clientNotes: [], // must be an array
     meals:[],
-    mealTotals: {},
+    mealTotals: {
+      caloriers:number,
+      carbs:number,
+      protein:number,
+      fat: number,
+    },
     base: boolean,
 };
 
 export interface IMealPlanStateContext {
-   readonly mealPlan?: IMealPlan;  
+   readonly mealPlan?: IMealPlan[];  
    readonly mealPlans?: IMealPlan[]; 
    readonly isPending: boolean;  
    readonly isSuccess: boolean; 
