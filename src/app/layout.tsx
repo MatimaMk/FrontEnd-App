@@ -5,7 +5,7 @@ import "./globals.css"
 import { FoodProvider } from "@/providers/foodItemProvider";
 import { AuthTrainerProvider } from "@/providers/authProvider/trainer";
 import { CurrentUserProvider } from "@/providers/currUserProvider";
-import { ClientProvider } from "@/providers/clientProvider";
+
 
 
 const geistSans = Geist({
@@ -35,11 +35,11 @@ export default function RootLayout({
 
       <AuthTrainerProvider>
       <CurrentUserProvider>
-        <ClientProvider>
+       
         <FoodProvider>
         {children}
       </FoodProvider>
-      </ClientProvider>
+     
       </CurrentUserProvider>
      </AuthTrainerProvider>
       </body>

@@ -9,14 +9,19 @@ import axios from "axios";
 export const FoodProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(FoodItemReducer, INITIAL_STATE);
 
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Y2FhMWM3ZjQ4MzY0MDAxOTVkYTE2OCIsIm5hbWUiOiJ0ZXN0IHRyYWluZXIgMiIsInJvbGUiOiJhZG1pbiIsImZlYXR1cmVzIjpbXSwiaWF0IjoxNzQxMzM3NjAxLCJleHAiOjE3NDE5NDI0MDF9.JFQUc66Czls-WRAirbQ1usByTFWyoh9sJtIWt6IOByU';
-
-  const getHeaders = () => ({
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-  });
+  const getHeaders = () => {
+    // Get token from session storage
+    const token = sessionStorage.getItem("token"); 
+    if (!token) {
+      throw new Error("No token found in session storage"); 
+    }
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
+  };
 
   // Get food items
   const getFoodItems = async () => {

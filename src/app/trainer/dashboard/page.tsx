@@ -17,12 +17,15 @@ import {
   CurrentUserAction,
   CurrentUserState,
 } from "@/providers/currUserProvider";
-import AddClinet from "@/components/addClientForm/page";
-import { IFood } from "@/providers/foodItemProvider/context";
+import FoodItemsDisplay from "@/components/foodDisplay/page";
+import UserDetails from "@/components/currUser/page";
 
 const { Header, Sider, Content } = Layout;
+
 const Dashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [selectedMenuKey, setSelectedMenuKey] = useState("1"); // Track the selected menu item
+
   const { foodItems, isPending, isError } = useFoodItemState();
   const { getFoodItems } = useFoodItemsActions();
   const { currentUser, iscurrPending, iscurrSuccess, iscurrError } =
@@ -35,67 +38,34 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     getFoodItems();
+    getCurrentUser();
   }, []);
 
-  useEffect(() => {
-    if (iscurrSuccess) {
-      getCurrentUser();
+  const renderContent = () => {
+    switch (selectedMenuKey) {
+      case "1":
+        return (
+          <div>
+            <h1>List of Users</h1>
+            {currentUser ? (
+              <div>
+                <UserDetails/>
+              </div>
+            ) : (
+              <p>No user data available.</p>
+            )}
+          </div>
+        );
+      case "2":
+        return (
+         <FoodItemsDisplay/>
+        );
+      case "3":
+        return <h1>Meal Plans</h1>;
+      default:
+        return <p>Select a menu item to display content.</p>;
     }
-  }, []);
-
-  if (isPending) {
-    return (
-      // must take this style to ts file later
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <Spin tip="Loading..." size="large">
-          <Alert
-            message="Fetching all the Food Items"
-            description="Please wait, fetching all the items."
-            type="info"
-          />
-        </Spin>
-      </div>
-    );
-  }
-
-  // for currentUser
-  if (iscurrPending) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <Spin tip="Loading..." size="large">
-          <Alert message="please wait" description="loading..." type="info" />
-        </Spin>
-      </div>
-    );
-  }
-
-  if (iscurrError) {
-    return <div>Error occurred, could not fetch the user</div>;
-  }
-
-  // error status for food itms
-  if (isError) {
-    return <div>Error loading food Items!</div>;
-  }
-
-  // if there are no food items
-  if (!foodItems || Object.keys(foodItems).length === 0) {
-    return <div>No Food items found</div>;
-  }
+  };
 
   return (
     <Layout>
@@ -105,6 +75,7 @@ const Dashboard: React.FC = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
+          onClick={({ key }) => setSelectedMenuKey(key)} // Update selected menu item
           items={[
             {
               key: "1",
@@ -136,7 +107,7 @@ const Dashboard: React.FC = () => {
               height: 64,
             }}
           />
-          <AddClinet />
+          {/* <AddClinet /> */}
         </Header>
         <Content
           style={{
@@ -147,59 +118,7 @@ const Dashboard: React.FC = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          {/* dispalying the current user */}
-          <div>
-            <h1>Welcome, {currentUser?.name}!</h1>
-            <p>ID: {currentUser?.id}</p>
-            <p>Email: {currentUser?.name}</p>
-          </div>
-
-          {/* displaying the food items */}
-          <div>
-            {Object.keys(foodItems).length > 0 ? (
-              Object.values(foodItems).map((item: IFood) => (
-                <div key={item.id}>
-                  <h1>Food Item: {item.name}</h1>
-                  <p>
-                    <strong>Category:</strong> {item.category}
-                  </p>
-                  <p>
-                    <strong>Serving Size:</strong> {item.servingsize}g
-                  </p>
-                  <p>
-                    <strong>Protein:</strong> {item.protein}g
-                  </p>
-                  <p>
-                    <strong>Carbs:</strong> {item.carbs}g
-                  </p>
-                  <p>
-                    <strong>Sugar:</strong> {item.sugar}g
-                  </p>
-                  <p>
-                    <strong>Fat:</strong> {item.fat}g
-                  </p>
-                  <p>
-                    <strong>Fiber:</strong> {item.fiber}g
-                  </p>
-                  <p>
-                    <strong>Sodium:</strong> {item.sodium}mg
-                  </p>
-                  <p>
-                    <strong>Potassium:</strong> {item.potassium}mg
-                  </p>
-                  <p>
-                    <strong>Cholesterol:</strong> {item.cholesterol}mg
-                  </p>
-                  <p>
-                    <strong>Energy:</strong> {item.energy}kcal
-                  </p>
-                  <hr />
-                </div>
-              ))
-            ) : (
-              <p>No food items available.</p>
-            )}
-          </div>
+          {renderContent()}
         </Content>
       </Layout>
     </Layout>
