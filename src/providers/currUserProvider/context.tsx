@@ -1,8 +1,22 @@
 "use client"
 import { createContext } from 'react';
 
+
+export interface IUser {
+  id?: string,
+  name?: string,
+  email?: string,
+  role?: string,
+  contactNumber?: string,
+  planType?: string,
+  activeState?:true,
+  trial?: false,
+  policiesAccepted?:boolean,
+  date: string,
+}
+
 export interface ICurrentUserStateContext {
-  readonly currentUser?: any;
+  readonly currentUser?: IUser;
   readonly iscurrPending: boolean;
   readonly iscurrSuccess: boolean;
   readonly iscurrError: boolean;

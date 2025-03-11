@@ -1,36 +1,36 @@
-"use client"
+"use client";
 import { createContext } from "react";
 
-// Interface defining the shape of a foodItem object
+// Interface defining the shape of a client object
 export interface IClient {
-       fullName: string,
-        email:string,
-        contactNumber: string,
-        sex:string,
-        DateOfBirth?: string,
-        activeState: boolean,
-        trainerId: string,
+  fullName: string;
+  email: string;
+  contactNumber: string;
+  sex: string;
+  DateOfBirth?: string;
+  activeState: boolean;
+  trainerId: string;
 }
 
-
 export interface IClientStateContext {
-   readonly ClientInfo?: IClient;   
-   readonly isPending: boolean;  
-   readonly isSuccess: boolean; 
-   readonly isError: boolean;     
-  };
+  readonly ClientInfo?: IClient;
+  readonly isPending: boolean;
+  readonly isSuccess: boolean;
+  readonly isError: boolean;
+}
 
-  export const INITIAL_STATE: IClientStateContext = {
-      isPending: false,  
-      isSuccess: false,  
-      isError: false, 
-    };
+export const INITIAL_STATE: IClientStateContext = {
+  isPending: false,
+  isSuccess: false,
+  isError: false,
+};
 
-    export interface IClientActionContext {
-  
-        createClient: (payload: IClient) => void;  
-    
-      };
-    
-    export const ClientStateContext =createContext<IClientStateContext>(INITIAL_STATE);
-    export const ClientActionContext = createContext<IClientActionContext | undefined>(undefined);
+export interface IClientActionContext {
+  createClient: (payload: IClient) => void;
+}
+
+export const ClientStateContext =
+  createContext<IClientStateContext>(INITIAL_STATE);
+export const ClientActionContext = createContext<
+  IClientActionContext | undefined
+>(undefined);

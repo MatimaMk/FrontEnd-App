@@ -9,10 +9,14 @@ import {
   FormProps,
   Input,
   Spin,
- 
 } from "antd";
 import { ITrainerRegis } from "@/providers/authProvider/trainer/context";
-import { UserOutlined, MailOutlined, LockOutlined, PhoneOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  MailOutlined,
+  LockOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
 import {
   useTrainerAuthState,
   useAuthActionState,
@@ -27,7 +31,7 @@ const Register = () => {
   const { isSuccess, isPending, isError } = useTrainerAuthState();
   const { RegisterTrainer } = useAuthActionState();
   const { styles } = useStyles();
-   const router = useRouter();
+  const router = useRouter();
 
   const onChange: CheckboxProps["onChange"] = (e) => {
     console.log(`checked = ${e.target.checked}`);
@@ -35,7 +39,14 @@ const Register = () => {
 
   if (isPending) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <Spin tip="Loading..." size="large">
           <Alert message="please wait" description="loading..." type="info" />
         </Spin>
@@ -51,7 +62,7 @@ const Register = () => {
     values: ITrainerRegis
   ) => {
     if (RegisterTrainer) {
-    //  const hashedPassword = await bcrypt.hash(values.password, 12);
+      //  const hashedPassword = await bcrypt.hash(values.password, 12);
       const trainerData: ITrainerRegis = {
         name: values.name,
         email: values.email,
@@ -67,17 +78,18 @@ const Register = () => {
       RegisterTrainer(trainerData);
       if (isSuccess) {
         <Alert
-        message="Successfully Registered"
-        description="You are registered as a trainer with the role Admin, Please login ."
-        type="success"
-        showIcon
-      />
-      router.push("/trainer/login")
+          message="Successfully Registered"
+          description="You are registered as a trainer with the role Admin, Please login ."
+          type="success"
+          showIcon
+        />;
+        router.push("/trainer/login");
       }
     }
   };
 
   return (
+    // must take this style to ts file later
     <div style={{ display: "flex", height: "100vh", alignItems: "center" }}>
       {/* Left Section: Image */}
       <div
@@ -104,7 +116,7 @@ const Register = () => {
           >
             <Form.Item<ITrainerRegis>
               label="name"
-               name="name"
+              name="name"
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
@@ -115,7 +127,7 @@ const Register = () => {
                 placeholder="name"
                 prefix={<UserOutlined />}
                 className={styles.input}
-                 allowClear
+                allowClear
               />
             </Form.Item>
             <Form.Item<ITrainerRegis>
@@ -144,7 +156,7 @@ const Register = () => {
               ]}
             >
               <Input.Password
-              minLength={6}
+                minLength={6}
                 placeholder="password"
                 prefix={<LockOutlined />}
                 className={styles.input}
@@ -162,7 +174,7 @@ const Register = () => {
                 placeholder="confirm Password"
                 prefix={<LockOutlined />}
                 className={styles.input}
-                 allowClear
+                allowClear
               />
             </Form.Item>
             <Form.Item<ITrainerRegis>
@@ -172,7 +184,6 @@ const Register = () => {
                 {
                   required: true,
                   message: "Please input your contact number!",
-                 
                 },
               ]}
             >
