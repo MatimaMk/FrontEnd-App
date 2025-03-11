@@ -10,6 +10,8 @@ import {
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import { useFoodItemState, useFoodItemsActions } from '@/providers/foodItemProvider';
+import { CurrentUserAction, CurrentUserState } from '@/providers/currUserProvider';
+import AddClinet from '@/components/dashboardLayout/page';
 
 const { Header, Sider, Content } = Layout;
 
@@ -18,6 +20,8 @@ const Dashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { foodItems, isPending, isError } = useFoodItemState();
    const { getFoodItems } = useFoodItemsActions();  
+   const { currentUser, iscurrPending, iscurrSuccess, iscurrError } = CurrentUserState();
+   const {getCurrentUser} = CurrentUserAction(); 
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -38,15 +42,36 @@ const Dashboard: React.FC = () => {
     );
   }
   
-  // error status
-  if (isError) {
-    return <div>Error loading products!</div>;
+
+ // for currentUser
+  if (iscurrPending) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
+        <Spin tip="Loading..." size="large">
+          <Alert message="please wait" description="loading..." type="info" />
+        </Spin>
+      </div>
+    );
   }
 
-  // if there are no product
-  if (!foodItems || Object.keys(foodItems).length === 0) {
-    return <div>No products found</div>;
+  if (iscurrError) {
+    return <div>Error occurred, could not fetch the user</div>;
   }
+
+  if(iscurrSuccess){
+    getCurrentUser();
+  }
+
+  // error status for food itms
+  if (isError) {
+    return <div>Error loading food Items!</div>;
+  }
+
+  // if there are no food items 
+  if (!foodItems || Object.keys(foodItems).length === 0) {
+    return <div>No Food items found</div>;
+  }
+
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -59,17 +84,18 @@ const Dashboard: React.FC = () => {
             {
               key: '1',
               icon: <UserOutlined />,
-              label: 'nav 1',
+              label: 'List of users',
             },
             {
               key: '2',
               icon: <VideoCameraOutlined />,
-              label: 'nav 2',
+              label: 'Food Items',
             },
             {
               key: '3',
               icon: <UploadOutlined />,
-              label: 'nav 3',
+              label: 'Meal Plans',
+              
             },
           ]}
         />
@@ -86,6 +112,8 @@ const Dashboard: React.FC = () => {
               height: 64,
             }}
           />
+    <AddClinet/>
+
         </Header>
         <Content
           style={{
@@ -96,7 +124,36 @@ const Dashboard: React.FC = () => {
             borderRadius: borderRadiusLG,
           }}
         >
- 
+          {/* <div>
+      <h1>Welcome, {currentUser.name}!</h1>
+      <p>ID: {currentUser}</p>
+      <p>Email: {currentUser.email}</p>
+    </div> */}
+
+<div>
+      {Object.keys(foodItems).length > 0 ? (
+        Object.values(foodItems).map((item: any) => (
+          <div key={item._id}>
+            <h1>Food Item: {item.name}</h1>
+            <p><strong>Category:</strong> {item.category}</p>
+            <p><strong>Serving Size:</strong> {item.servingSize}g</p>
+            <p><strong>Protein:</strong> {item.protein}g</p>
+            <p><strong>Carbs:</strong> {item.carbs}g</p>
+            <p><strong>Sugar:</strong> {item.sugar}g</p>
+            <p><strong>Fat:</strong> {item.fat}g</p>
+            <p><strong>Fiber:</strong> {item.fiber}g</p>
+            <p><strong>Sodium:</strong> {item.sodium}mg</p>
+            <p><strong>Potassium:</strong> {item.potassium}mg</p>
+            <p><strong>Cholesterol:</strong> {item.cholesterol}mg</p>
+            <p><strong>Energy:</strong> {item.energy}kcal</p>
+            <hr />
+          </div>
+        ))
+      ) : (
+        <p>No food items available.</p>
+      )}
+    </div>
+
 
         </Content>
         

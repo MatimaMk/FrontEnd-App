@@ -6,11 +6,10 @@ export interface IClient {
        fullName: string,
         email:string,
         contactNumber: string,
-        sex:number,
-        DateOfBirth: number,
-        activeState: number,
+        sex:string,
+        DateOfBirth?: string,
+        activeState: boolean,
         trainerId: string,
-
 }
 
 

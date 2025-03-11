@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css"
 import { FoodProvider } from "@/providers/foodItemProvider";
 import { AuthTrainerProvider } from "@/providers/authProvider/trainer";
+import { CurrentUserProvider } from "@/providers/currUserProvider";
 
 
 const geistSans = Geist({
@@ -32,9 +33,11 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
 
       <AuthTrainerProvider>
+      <CurrentUserProvider>
         <FoodProvider>
         {children}
       </FoodProvider>
+      </CurrentUserProvider>
      </AuthTrainerProvider>
       </body>
    
