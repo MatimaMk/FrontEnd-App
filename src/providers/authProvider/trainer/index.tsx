@@ -52,15 +52,16 @@ export const AuthTrainerProvider = ({
       .then((response) => {
         // Extract the token from the response
         const token = response.data.token; 
-        // Store the token in local storage
-        localStorage.setItem("token", token); 
+        // Store the token in session storage
+        sessionStorage.setItem("token", token); 
         dispatch(loginTSuccess(response.data));
       })
       .catch((error) => {
         console.error("Error during login:", error);
         dispatch(loginTError());
       });
-  };
+};
+
   
   
   return (

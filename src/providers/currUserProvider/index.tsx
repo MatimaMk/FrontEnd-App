@@ -23,20 +23,26 @@ export const CurrentUserProvider = ({
 
   const getCurrentUser = async () => {
     dispatch(getCurrentUserPending());
-    const endpoint = "/api/user/current";
-    const token = localStorage.getItem("token");
 
-    if (!token) return dispatch(getCurrentUserError());
+    const endpoint = "/api/user/current";
+    const token = sessionStorage.getItem("token");
+
+    if (!token) {
+        return dispatch(getCurrentUserError());
+    }
 
     instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+
     try {
-      const response = await instance.get(endpoint);
-      dispatch(getCurrentUserSuccess(response.data));
+        const response = await instance.get(endpoint);
+        const user = response.data;
+
+        dispatch(getCurrentUserSuccess(user));
     } catch (error) {
-      console.error("Error getting current user:", error);
-      dispatch(getCurrentUserError());
+        console.error("Error getting current user:", error);
+        dispatch(getCurrentUserError());
     }
-  };
+};
 
   return (
     <CurrentUserStateContext.Provider value={state}>
@@ -67,4 +73,4 @@ function CurrentUserAction() {
   return context;
 }
 
-export { CurrentUserState, CurrentUserAction };
+export { CurrentUserState, CurrentUserAction }
