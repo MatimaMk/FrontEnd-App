@@ -8,6 +8,7 @@ import {
   Form,
   FormProps,
   Input,
+  Spin,
  
 } from "antd";
 import { ITrainerRegis } from "@/providers/authProvider/trainer/context";
@@ -18,23 +19,32 @@ import {
 } from "@/providers/authProvider/trainer";
 import "@ant-design/v5-patch-for-react-19";
 import { useStyles } from "../registration/style/style";
+import Alert from "antd/es/alert/Alert";
+import { useRouter } from "next/navigation";
 //import bcrypt from "bcryptjs";
 
 const Register = () => {
   const { isSuccess, isPending, isError } = useTrainerAuthState();
   const { RegisterTrainer } = useAuthActionState();
   const { styles } = useStyles();
+   const router = useRouter();
 
   const onChange: CheckboxProps["onChange"] = (e) => {
     console.log(`checked = ${e.target.checked}`);
   };
 
   if (isPending) {
-    return <div>loading...</div>;
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
+        <Spin tip="Loading..." size="large">
+          <Alert message="please wait" description="loading..." type="info" />
+        </Spin>
+      </div>
+    );
   }
 
   if (isError) {
-    return <div>failed...</div>;
+    return <div>failed to register the user, try registering again</div>;
   }
 
   const onFinish: FormProps<ITrainerRegis>["onFinish"] = async (
@@ -56,7 +66,13 @@ const Register = () => {
       };
       RegisterTrainer(trainerData);
       if (isSuccess) {
-        alert("Registration successful");
+        <Alert
+        message="Successfully Registered"
+        description="You are registered as a trainer with the role Admin, Please login ."
+        type="success"
+        showIcon
+      />
+      router.push("/trainer/login")
       }
     }
   };

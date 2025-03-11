@@ -1,5 +1,5 @@
 "use client";
-import { Button, Card, Form, Input } from "antd";
+import { Button, Card, Form, Input, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "@ant-design/v5-patch-for-react-19";
 import { useStyles } from "../registration/style/style";
@@ -9,6 +9,7 @@ import {
 } from "@/providers/authProvider/trainer";
 import { ILogins } from "@/providers/authProvider/trainer/context";
 import { useRouter } from 'next/navigation'
+import Alert from "antd/es/alert/Alert";
 
 const Login = () => {
   const { isSuccess, isPending, isError } = useTrainerAuthState();
@@ -18,7 +19,13 @@ const Login = () => {
 
 
   if (isPending) {
-    return <div>loading...</div>;
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
+        <Spin tip="Loading..." size="large">
+          <Alert message="please wait" description="loading..." type="info" />
+        </Spin>
+      </div>
+    );
   }
 
   if (isError) {

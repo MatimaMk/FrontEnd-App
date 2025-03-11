@@ -50,8 +50,10 @@ export const AuthTrainerProvider = ({
     const endpoint = "/api/users/login";
     await instance.post(endpoint, payload)
       .then((response) => {
-        const token = response.data.token; // Extract the token from the response
-        localStorage.setItem("token", token); // Store the token in local storage
+        // Extract the token from the response
+        const token = response.data.token; 
+        // Store the token in local storage
+        localStorage.setItem("token", token); 
         dispatch(loginTSuccess(response.data));
       })
       .catch((error) => {
