@@ -1,3 +1,4 @@
+"use client"
 import { useContext, useReducer } from "react";
 import { ClientReducer } from "./reducer";
 import {  ClientActionContext, ClientStateContext, IClient, INITIAL_STATE } from "./context";
