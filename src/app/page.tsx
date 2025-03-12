@@ -110,6 +110,11 @@ export default function Home() {
                 success!
               </Typography.Paragraph>
             </Tooltip>
+            {/* <p >
+          Are you a new client? Please{" "}<a href="/Client/register" >
+              Register
+            </a>
+          </p> */}
             <div
               style={{
                 display: "flex",
@@ -149,7 +154,7 @@ export default function Home() {
               <Button
                 type="primary"
                 size="large"
-                href="/trainer/testing"
+                href="/Client/registration"
                 target="_blank"
                 style={{
                   backgroundColor: "#1e3e06",
@@ -158,8 +163,9 @@ export default function Home() {
                   transition: "all 0.3s ease",
                 }}
               >
-                Testing
+                testing 
               </Button>
+
               <Button
                 type="primary"
                 size="large"

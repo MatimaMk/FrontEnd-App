@@ -1,5 +1,4 @@
 "use client";
-import { Alert, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   MenuFoldOutlined,
@@ -8,33 +7,25 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
-import {
-  useFoodItemState,
-  useFoodItemsActions,
-} from "@/providers/foodItemProvider";
+import { Button, Layout, Menu } from "antd";
+import { useFoodItemsActions } from "@/providers/foodItemProvider";
 import {
   CurrentUserAction,
   CurrentUserState,
 } from "@/providers/currUserProvider";
 import FoodItemsDisplay from "@/components/foodDisplay/page";
 import UserDetails from "@/components/currUser/page";
+import AddClient from "@/components/addClientForm/page";
 
 const { Header, Sider, Content } = Layout;
 
 const Dashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedMenuKey, setSelectedMenuKey] = useState("1"); // Track the selected menu item
+  const [selectedMenuKey, setSelectedMenuKey] = useState("1");
 
-  const { foodItems, isPending, isError } = useFoodItemState();
   const { getFoodItems } = useFoodItemsActions();
-  const { currentUser, iscurrPending, iscurrSuccess, iscurrError } =
-    CurrentUserState();
+  //const { currentUser } = CurrentUserState();
   const { getCurrentUser } = CurrentUserAction();
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
 
   useEffect(() => {
     getFoodItems();
@@ -44,22 +35,9 @@ const Dashboard: React.FC = () => {
   const renderContent = () => {
     switch (selectedMenuKey) {
       case "1":
-        return (
-          <div>
-            <h1>List of Users</h1>
-            {currentUser ? (
-              <div>
-                <UserDetails/>
-              </div>
-            ) : (
-              <p>No user data available.</p>
-            )}
-          </div>
-        );
+        return <UserDetails />;
       case "2":
-        return (
-         <FoodItemsDisplay/>
-        );
+        return <FoodItemsDisplay />;
       case "3":
         return <h1>Meal Plans</h1>;
       default:
@@ -68,35 +46,39 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
+    <Layout style={{ minHeight: "100vh", background: "#F5F7E6" }}>
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        style={{ background: "#1E3A08" }}
+      >
+        <div style={{ color: "#fff", padding: "16px", textAlign: "center" }}>
+          DietCoach
+        </div>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          onClick={({ key }) => setSelectedMenuKey(key)} // Update selected menu item
+          onClick={({ key }) => setSelectedMenuKey(key)}
+          style={{ background: "#1E3A08" }}
           items={[
-            {
-              key: "1",
-              icon: <UserOutlined />,
-              label: "List of users",
-            },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "Food Items",
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "Meal Plans",
-            },
+            { key: "1", icon: <UserOutlined />, label: "List of users" },
+            { key: "2", icon: <VideoCameraOutlined />, label: "Food Items" },
+            { key: "3", icon: <UploadOutlined />, label: "Meal Plans" },
           ]}
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
+        <Header
+          style={{
+            padding: "0 16px",
+            background: "#DDECC8",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -105,17 +87,19 @@ const Dashboard: React.FC = () => {
               fontSize: "16px",
               width: 64,
               height: 64,
+              color: "#1E3A08",
             }}
           />
-          {/* <AddClinet /> */}
+          <AddClient />
         </Header>
         <Content
           style={{
             margin: "24px 16px",
             padding: 24,
             minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
+            background: "#FFFFFF",
+            borderRadius: "12px",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
           }}
         >
           {renderContent()}

@@ -5,6 +5,9 @@ import "./globals.css"
 import { FoodProvider } from "@/providers/foodItemProvider";
 import { AuthTrainerProvider } from "@/providers/authProvider/trainer";
 import { CurrentUserProvider } from "@/providers/currUserProvider";
+import { ClientManProvider } from "@/providers/ClientManProvider";
+import { ClientAuthProvider } from "@/providers/authProvider/client";
+
 
 
 
@@ -35,11 +38,13 @@ export default function RootLayout({
 
       <AuthTrainerProvider>
       <CurrentUserProvider>
-       
+      <ClientManProvider>
+       <ClientAuthProvider>
         <FoodProvider>
         {children}
       </FoodProvider>
-     
+      </ClientAuthProvider>
+      </ClientManProvider>
       </CurrentUserProvider>
      </AuthTrainerProvider>
       </body>
