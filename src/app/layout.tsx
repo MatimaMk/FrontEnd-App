@@ -1,6 +1,15 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "./globals.css"
+import { FoodProvider } from "@/providers/foodItemProvider";
+import { AuthTrainerProvider } from "@/providers/authProvider/trainer";
+import { CurrentUserProvider } from "@/providers/currUserProvider";
+import { ClientManProvider } from "@/providers/ClientManProvider";
+import { ClientAuthProvider } from "@/providers/authProvider/client";
+
+
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,9 +33,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+    
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+
+      <AuthTrainerProvider>
+      <CurrentUserProvider>
+      <ClientManProvider>
+       <ClientAuthProvider>
+        <FoodProvider>
         {children}
+      </FoodProvider>
+      </ClientAuthProvider>
+      </ClientManProvider>
+      </CurrentUserProvider>
+     </AuthTrainerProvider>
       </body>
+   
     </html>
   );
 }
