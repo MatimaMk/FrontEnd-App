@@ -10,32 +10,30 @@ export const FoodProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(FoodItemReducer, INITIAL_STATE);
 
   const getHeaders = () => {
-    // Get token from session storage
-    const token = sessionStorage.getItem("token"); 
+    const token = sessionStorage.getItem("token");
     if (!token) {
-      throw new Error("No token found in session storage"); 
+      throw new Error("No token found in session storage");
     }
     return {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
         "Content-Type": "application/json",
       },
     };
   };
-
-  // Get food items
+  
   const getFoodItems = async () => {
     dispatch(getFoodItemsPending());
     try {
       const endpoint = 'https://body-vault-server-b9ede5286d4c.herokuapp.com/api/food/';
-      const response = await axios.get(endpoint, getHeaders());
+      const headers = getHeaders();
+      const response = await axios.get(endpoint, headers);
       dispatch(getFoodItemsSuccess(response.data));
     } catch (error) {
       console.error('Error fetching food items:', error);
       dispatch(getFoodItemsError());
     }
   };
-
   // Get food items by category
   const getFoodItem = async (category: string) => {
     dispatch(getFoodItemPending());

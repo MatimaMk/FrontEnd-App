@@ -44,24 +44,26 @@ export const AuthTrainerProvider = ({
   };
 
   const login = async (payload: ILogins) => {
-    // Dispatch pending action before API call
-    dispatch(loginTPending());
+    try {
+      const endpoint = "/api/users/login";
+      dispatch(loginTPending());
+      const response = await instance.post(endpoint, payload);
+      console.log("Login response:", response.data);
   
-    const endpoint = "/api/users/login";
-    await instance.post(endpoint, payload)
-      .then((response) => {
-        // Extract the token from the response
-        const token = response.data.token; 
-        // Store the token in session storage
-        sessionStorage.setItem("token", token); 
-        dispatch(loginTSuccess(response.data));
-      })
-      .catch((error) => {
-        console.error("Error during login:", error);
-        dispatch(loginTError());
-      });
-};
-
+      const token = response.data?.data?.token;
+      if (token) {
+        sessionStorage.setItem("token", token);
+        console.log("Token stored successfully:", token);
+      } else {
+        console.error("Token is missing from the response.");
+      }
+  
+      dispatch(loginTSuccess(response.data));
+    } catch (error) {
+      console.error("Login error:", error);
+      dispatch(loginTError());
+    }
+  };
   
   
   return (

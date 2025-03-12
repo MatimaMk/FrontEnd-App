@@ -23,7 +23,8 @@ export interface ICurrentUserStateContext {
 };
 
 export interface ICurrentUserActionContext {
-  getCurrentUser: () => void;
+    getCurrentUser: () => Promise<void>;
+
 };
 
 export const INITIAL_STATE: ICurrentUserStateContext = {
