@@ -5,7 +5,7 @@ import {
   useFoodItemsActions,
   useFoodItemState,
 } from "@/providers/foodItemProvider";
-import { useStyles } from "./styles/style";
+
 import { IFood } from "@/providers/foodItemProvider/context";
 
 const FoodItemsDisplay: React.FC = () => {

@@ -2,7 +2,7 @@ import {
   CurrentUserAction,
   CurrentUserState,
 } from "@/providers/currUserProvider";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 const UserDetails = () => {
   const { currentUser, iscurrPending, iscurrError } = CurrentUserState();

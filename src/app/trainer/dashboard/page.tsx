@@ -11,7 +11,7 @@ import { Button, Layout, Menu } from "antd";
 import { useFoodItemsActions } from "@/providers/foodItemProvider";
 import {
   CurrentUserAction,
-  CurrentUserState,
+  
 } from "@/providers/currUserProvider";
 import FoodItemsDisplay from "@/components/foodDisplay/page";
 import UserDetails from "@/components/currUser/page";
