@@ -1,29 +1,58 @@
 "use client";
 
-import { Button, Checkbox, Form, Input, Popover, Space } from "antd";
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Popover,
+  Space,
+  Spin,
+} from "antd";
 import type { CheckboxProps } from "antd";
-
 import { IClient } from "@/providers/ClientManProvider/context";
-import { ClientActionState } from "@/providers/ClientManProvider";
+import { useCreateByTrainer } from "@/providers/ClientManProvider";
 
 // Checkbox state handler
 const onChange: CheckboxProps["onChange"] = (e) => {
   console.log(`Checked = ${e.target.checked}`);
 };
-
 const AddClientForm: React.FC = () => {
-  const { createClient } = ClientActionState(); // Get the createClient function from context
+  const { isPending, createClient } = useCreateByTrainer();
 
-  const onFinish = (values: IClient) => {
-    console.log("Form Values Submitted:", values);
+  const token = typeof window !== "undefined" ? sessionStorage.getItem("token") : null;
 
-    // Post the form data using the createClient function
-    createClient({
-      ...values,
-      activeState: values.activeState || false, // Ensure activeState is boolean
-    });
+
+  const onFinish = async (ClientInfo: IClient) => {
+    if (token) {
+      try {
+        await createClient(ClientInfo);
+        alert("Client successfully registered");
+      } catch (error) {
+        console.error("Registration failed:", error);
+      }
+    }
   };
 
+  if (isPending) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spin tip="Loading..." size="large">
+          <Alert message="Please wait" description="Loading..." type="info" />
+        </Spin>
+      </div>
+    );
+  }
+
+ 
 
   return (
     <Form
@@ -31,8 +60,8 @@ const AddClientForm: React.FC = () => {
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
-      initialValues={{ remember: true }}
       onFinish={onFinish}
+    
       autoComplete="off"
     >
       <Form.Item<IClient>
@@ -71,7 +100,7 @@ const AddClientForm: React.FC = () => {
 
       <Form.Item<IClient>
         label="DOB"
-        name="DateOfBirth"
+        name="dateOfBirth"
         rules={[
           { required: true, message: "Please input your date of birth!" },
         ]}
@@ -88,7 +117,9 @@ const AddClientForm: React.FC = () => {
       </Form.Item>
 
       <Form.Item name="activeState" valuePropName="checked">
-        <Checkbox onChange={onChange}>Activate Client</Checkbox>
+        <Checkbox onChange={onChange}>
+          Activate Client
+        </Checkbox>
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -99,7 +130,6 @@ const AddClientForm: React.FC = () => {
     </Form>
   );
 };
-
 const AddClient: React.FC = () => (
   <Space wrap>
     <Popover content={<AddClientForm />} title="Create Client" trigger="click">

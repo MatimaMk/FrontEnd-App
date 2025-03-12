@@ -47,14 +47,14 @@ const Login = () => {
   return (
     <div style={{ display: "flex", height: "100vh", alignItems: "center" }}>
       {/* Left Section: Image */}
-      <div
-        style={{
-          flex: 1,
-          backgroundImage: `url('https://media.istockphoto.com/photos/food-backgrounds-table-filled-with-large-variety-of-food-picture-id1155240452?k=20&m=1155240452&s=170667a&w=0&h=bduOZzahxHhXORVnjovY7SWTSdLh6nzrZAKdJtPzia4=')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      ></div>
+     <div
+  style={{
+    flex: 1,
+    backgroundImage: `url('https://diyglow.in/wp-content/uploads/2023/08/healthy-food.jpg')`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+></div>
       {/* Right Section: Login Form */}
       <div className={styles.card_div}>
         <Card className={styles.card}>

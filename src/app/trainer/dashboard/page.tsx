@@ -1,21 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
+
 } from "@ant-design/icons";
 import { Button, Layout, Menu } from "antd";
-import { useFoodItemsActions } from "@/providers/foodItemProvider";
-import {
-  CurrentUserAction,
-  
-} from "@/providers/currUserProvider";
-import FoodItemsDisplay from "@/components/foodDisplay/page";
 import UserDetails from "@/components/currUser/page";
-import AddClient from "@/components/addClientForm/page";
+
+import DispayFood from "@/components/foodDisplay/page";
+import AddClientForm from "@/components/addClientForm/page";
 
 const { Header, Sider, Content } = Layout;
 
@@ -23,22 +19,24 @@ const Dashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenuKey, setSelectedMenuKey] = useState("1");
 
-  const { getFoodItems } = useFoodItemsActions();
-  //const { currentUser } = CurrentUserState();
-  const { getCurrentUser } = CurrentUserAction();
+  // const { getFoodItems } = useFoodItemsActions();
+  // //const { currentUser } = CurrentUserState();
+  // const { getCurrentUser } = CurrentUserAction();
 
-  useEffect(() => {
-    getFoodItems();
-    getCurrentUser();
-  }, []);
+  // useEffect(() => {
+  //   getFoodItems();
+  //   getCurrentUser();
+  // }, []);
 
   const renderContent = () => {
-    switch (selectedMenuKey) {
+    switch (selectedMenuKey) { 
       case "1":
-        return <UserDetails />;
+      return <UserDetails />
       case "2":
-        return <FoodItemsDisplay />;
+        return <h1>List of Users</h1>
       case "3":
+        return <DispayFood/>;
+      case "4":
         return <h1>Meal Plans</h1>;
       default:
         return <p>Select a menu item to display content.</p>;
@@ -63,9 +61,10 @@ const Dashboard: React.FC = () => {
           onClick={({ key }) => setSelectedMenuKey(key)}
           style={{ background: "#1E3A08" }}
           items={[
-            { key: "1", icon: <UserOutlined />, label: "List of users" },
-            { key: "2", icon: <VideoCameraOutlined />, label: "Food Items" },
-            { key: "3", icon: <UploadOutlined />, label: "Meal Plans" },
+            { key: "1", icon: <UserOutlined />, label: "Profile" },
+            { key: "2", icon: <UserOutlined />, label: "List of users" },
+            { key: "3", icon: <UploadOutlined />, label: "Food Items" },
+            { key: "4", icon: <UploadOutlined />, label: "Meal Plans" }
           ]}
         />
       </Sider>
@@ -90,7 +89,7 @@ const Dashboard: React.FC = () => {
               color: "#1E3A08",
             }}
           />
-          <AddClient />
+          <AddClientForm />
         </Header>
         <Content
           style={{
@@ -103,6 +102,7 @@ const Dashboard: React.FC = () => {
           }}
         >
           {renderContent()}
+       
         </Content>
       </Layout>
     </Layout>

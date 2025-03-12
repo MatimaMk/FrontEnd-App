@@ -48,7 +48,7 @@ export const AuthTrainerProvider = ({
       const endpoint = "/api/users/login";
       dispatch(loginTPending());
       const response = await instance.post(endpoint, payload);
-      console.log("Login response:", response.data);
+     
   
       const token = response.data?.data?.token;
       if (token) {

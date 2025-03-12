@@ -21,10 +21,11 @@ export const CurrentUserProvider = ({
   const [state, dispatch] = useReducer(CurrentUserReducer, INITIAL_STATE);
   const instance = getAxiosInstace();
 
-  const getCurrentUser = async (): Promise<void> => {
-    dispatch(getCurrentUserPending());
+
+  const getCurrentUser = async () => {
     const endpoint = "/api/user/current";
     const token = sessionStorage.getItem("token");
+    dispatch(getCurrentUserPending());
 
     if (!token) return dispatch(getCurrentUserError());
 
@@ -33,6 +34,7 @@ export const CurrentUserProvider = ({
     try {
       const response = await instance.get(endpoint);
       dispatch(getCurrentUserSuccess(response.data));
+   
     } catch (error) {
       console.error("Error getting current user:", error);
       dispatch(getCurrentUserError());
@@ -67,5 +69,11 @@ function CurrentUserAction() {
   }
   return context;
 }
+const USECurrentuser=()=>{
+  return {
+    ...CurrentUserState(),
+    ...CurrentUserAction()
+  }
+}
 
-export { CurrentUserState, CurrentUserAction };
+export { USECurrentuser };
