@@ -1,12 +1,15 @@
-"use clinet"
-import React, { useEffect, useState } from 'react';
-import { Alert, Spin, Table } from 'antd';
-import { useFoodItems } from '@/providers/foodItemProvider';
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { Alert, Spin, Table } from "antd";
+import { useFoodItems } from "@/providers/foodItemProvider";
 
 const DisplayFood: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
-  const { getFoodItems, foodItems, isError, isPending, isSuccess } = useFoodItems();
+  const { getFoodItems, foodItems, isError, isPending, isSuccess } =
+    useFoodItems();
 
+  const primaryColour = { color: "green" };
   useEffect(() => {
     if (typeof window !== "undefined") {
       setToken(sessionStorage.getItem("token"));
@@ -21,7 +24,14 @@ const DisplayFood: React.FC = () => {
 
   if (isPending) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <Spin tip="Loading..." size="large">
           <Alert message="Please wait" description="Loading..." type="info" />
         </Spin>
@@ -39,69 +49,77 @@ const DisplayFood: React.FC = () => {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: <span style={primaryColour}>Name</span>,
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category',
+      title: <span style={primaryColour}>Category</span>,
+      dataIndex: "category",
+      key: "category",
     },
     {
-      title: 'Serving Size',
-      dataIndex: 'servingsize',
-      key: 'servingsize',
+      title: <span style={primaryColour}>Serving Size</span>,
+      dataIndex: "servingsize",
+      key: "servingsize",
     },
     {
-      title: 'Protein',
-      dataIndex: 'protein',
-      key: 'protein',
+      title: <span style={primaryColour}>Protein</span>,
+      dataIndex: "protein",
+      key: "protein",
     },
     {
-      title: 'Carbs',
-      dataIndex: 'carbs',
-      key: 'carbs',
+      title: <span style={primaryColour}>Carbs</span>,
+      dataIndex: "carbs",
+      key: "carbs",
     },
     {
-      title: 'Sugar',
-      dataIndex: 'sugar',
-      key: 'sugar',
+      title: <span style={primaryColour}>Sugar</span>,
+      dataIndex: "sugar",
+      key: "sugar",
     },
     {
-      title: 'Fat',
-      dataIndex: 'fat',
-      key: 'fat',
+      title: <span style={primaryColour}>Fat</span>,
+      dataIndex: "fat",
+      key: "fat",
     },
     {
-      title: 'Fiber',
-      dataIndex: 'fiber',
-      key: 'fiber',
+      title: <span style={primaryColour}>Fiber</span>,
+      dataIndex: "fiber",
+      key: "fiber",
     },
     {
-      title: 'Sodium',
-      dataIndex: 'sodium',
-      key: 'sodium',
+      title: <span style={primaryColour}>Sodium</span>,
+      dataIndex: "sodium",
+      key: "sodium",
     },
     {
-      title: 'Potassium',
-      dataIndex: 'potassium',
-      key: 'potassium',
+      title: <span style={primaryColour}>Potassium</span>,
+      dataIndex: "potassium",
+      key: "potassium",
     },
     {
-      title: 'Cholesterol',
-      dataIndex: 'cholesterol',
-      key: 'cholesterol',
+      title: <span style={primaryColour}>Cholesterol</span>,
+      dataIndex: "cholesterol",
+      key: "cholesterol",
     },
     {
-      title: 'Energy',
-      dataIndex: 'energy',
-      key: 'energy',
+      title: <span style={primaryColour}>Energy</span>,
+      dataIndex: "energy",
+      key: "energy",
     },
   ];
 
   return (
-    <Table columns={columns} dataSource={foodItems} />
+    <Table
+      columns={columns}
+      dataSource={foodItems}
+      style={{
+        border: "1px solid green",
+        backgroundColor: "green",
+        color: "white",
+      }}
+    />
   );
 };
 

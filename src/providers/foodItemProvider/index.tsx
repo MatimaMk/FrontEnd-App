@@ -65,8 +65,7 @@ export const FoodProvider = ({ children }: { children: React.ReactNode }) => {
   const createFoodItem = async (foodItem: IFood) => {
     dispatch(createFoodItemPending());
     try {
-      const endpoint =
-        "https://body-vault-server-b9ede5286d4c.herokuapp.com/api/food/";
+      const endpoint ="https://body-vault-server-b9ede5286d4c.herokuapp.com/api/food/";
       const response = await axios.post(endpoint, foodItem, getHeaders());
       dispatch(getFoodItemsSuccess([response.data]));
     } catch (error) {

@@ -25,6 +25,7 @@ import "@ant-design/v5-patch-for-react-19";
 import { useStyles } from "../registration/style/style";
 import Alert from "antd/es/alert/Alert";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 //import bcrypt from "bcryptjs";
 
 const Register = () => {
@@ -61,6 +62,16 @@ const Register = () => {
   const onFinish: FormProps<ITrainerRegis>["onFinish"] = async (
     values: ITrainerRegis
   ) => {
+    if (!values.email) {
+      alert("Please enter an email address.");
+      return;
+    }
+
+    if (values.password !== values.confirmPassword) {
+      alert("Passwords do not match. Please try again.");
+      return;
+    }
+
     if (RegisterTrainer) {
       //  const hashedPassword = await bcrypt.hash(values.password, 12);
       const trainerData: ITrainerRegis = {
@@ -77,12 +88,7 @@ const Register = () => {
       };
       RegisterTrainer(trainerData);
       if (isSuccess) {
-        <Alert
-          message="Successfully Registered"
-          description="You are registered as a trainer with the role Admin, Please login ."
-          type="success"
-          showIcon
-        />;
+        alert("successfully Registered");
         router.push("/trainer/login");
       }
     }
@@ -92,14 +98,16 @@ const Register = () => {
     // must take this style to ts file later
     <div style={{ display: "flex", height: "100vh", alignItems: "center" }}>
       {/* Left Section: Image */}
-      <div
-  style={{
-    flex: 1,
-    backgroundImage: `url('https://diyglow.in/wp-content/uploads/2023/08/healthy-food.jpg')`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  }}
-></div>
+      <div style={{ flex: 1, position: "relative" }}>
+        <Image
+          src="https://www.dyln.co/cdn/shop/articles/Alkaline-Header_1024x1024.jpg?v=1496339504"
+          alt=""
+          width={800}
+          height={700}
+          style={{ objectFit: "cover" }}
+          priority
+        />
+      </div>
 
       {/* Right Section: Register Form */}
       <div className={styles.card_div}>
