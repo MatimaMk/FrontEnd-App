@@ -133,7 +133,19 @@ const AddClientForm: React.FC = () => {
 const AddClient: React.FC = () => (
   <Space wrap>
     <Popover content={<AddClientForm />} title="Create Client" trigger="click">
-      <Button type="primary">Add Client</Button>
+    <Button
+                type="primary"
+                size="large"
+                target="_blank"
+                style={{
+                  backgroundColor: "#1e3e06",
+                  borderColor: "#1e3e06",
+                  color: "#e0ffdb",
+                  transition: "all 0.3s ease",
+                }}
+              >
+               Add Client
+              </Button>
     </Popover>
   </Space>
 );

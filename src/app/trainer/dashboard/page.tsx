@@ -1,17 +1,18 @@
 "use client";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import {
+  AppstoreOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
+  ShoppingCartOutlined,
+  TeamOutlined,
   UserOutlined,
-
 } from "@ant-design/icons";
 import { Button, Layout, Menu } from "antd";
 import UserDetails from "@/components/currUser/page";
-
 import DispayFood from "@/components/foodDisplay/page";
 import AddClientForm from "@/components/addClientForm/page";
+import AddFoodItemForm from "@/components/foodItem/page";
 
 const { Header, Sider, Content } = Layout;
 
@@ -19,23 +20,14 @@ const Dashboard: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenuKey, setSelectedMenuKey] = useState("1");
 
-  // const { getFoodItems } = useFoodItemsActions();
-  // //const { currentUser } = CurrentUserState();
-  // const { getCurrentUser } = CurrentUserAction();
-
-  // useEffect(() => {
-  //   getFoodItems();
-  //   getCurrentUser();
-  // }, []);
-
   const renderContent = () => {
-    switch (selectedMenuKey) { 
+    switch (selectedMenuKey) {
       case "1":
-      return <UserDetails />
+        return <UserDetails />;
       case "2":
-        return <h1>List of Users</h1>
+        return <h1>List of Users</h1>;
       case "3":
-        return <DispayFood/>;
+        return <DispayFood />;
       case "4":
         return <h1>Meal Plans</h1>;
       default:
@@ -62,9 +54,9 @@ const Dashboard: React.FC = () => {
           style={{ background: "#1E3A08" }}
           items={[
             { key: "1", icon: <UserOutlined />, label: "Profile" },
-            { key: "2", icon: <UserOutlined />, label: "List of users" },
-            { key: "3", icon: <UploadOutlined />, label: "Food Items" },
-            { key: "4", icon: <UploadOutlined />, label: "Meal Plans" }
+            { key: "2", icon: <TeamOutlined />, label: "List of Users" },
+            { key: "3", icon: <ShoppingCartOutlined />, label: "Food Items" },
+            { key: "4", icon: <AppstoreOutlined />, label: "Meal Plans" },
           ]}
         />
       </Sider>
@@ -90,6 +82,7 @@ const Dashboard: React.FC = () => {
             }}
           />
           <AddClientForm />
+          <AddFoodItemForm />
         </Header>
         <Content
           style={{
@@ -102,7 +95,6 @@ const Dashboard: React.FC = () => {
           }}
         >
           {renderContent()}
-       
         </Content>
       </Layout>
     </Layout>

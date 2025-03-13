@@ -163,22 +163,7 @@ export default function Home() {
                   transition: "all 0.3s ease",
                 }}
               >
-                testing 
-              </Button>
-
-              <Button
-                type="primary"
-                size="large"
-                href="/trainer/dashboard"
-                target="_blank"
-                style={{
-                  backgroundColor: "#1e3e06",
-                  borderColor: "#1e3e06",
-                  color: "#e0ffdb",
-                  transition: "all 0.3s ease",
-                }}
-              >
-                Dashboard
+                Client Register
               </Button>
             </div>
           </div>
