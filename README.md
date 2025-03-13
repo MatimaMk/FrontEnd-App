@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## 📌 Overview
+DietCoach is a **personal trainer platform** built with **Next.js and TypeScript (NextTS)**. It enables personal trainers to **manage clients, meal plans, and food items**, while clients can **view their assigned meal plans**.
+---
+## 📖 User Roles and Functionality
 
-First, run the development server:
+### **Trainer**
+- Register and log in.
+- Create, manage, and delete clients.
+- Create, manage meal plans.
+- Create, manage,food items.
+- View clients, meal plans, and food items.
 
-```bash
+### **Client**
+- Register (after being added by a trainer).
+- Log in.
+- View assigned meal plans.
+---
+
+## 📌 Project Flow
+
+1. **Authentication**
+   - Trainer registration and login.
+   - Client registration and login.
+
+2. **Trainer Features**
+   - Add, manage, and remove clients.
+   - Create, update, and delete meal plans.
+   - Create, update, and delete food items.
+   - View and edit clients, meal plans, and food items.
+
+3. **Client Features**
+   - View assigned meal plans.
+
+---
+
+## 📌 API Endpoints used
+
+**Base URL:**  
+`https://body-vault-server-b9ede5286d4c.herokuapp.com`
+
+### **Authentication**
+- **Register a Trainer:**  
+  `POST /api/users/register`
+- **Trainer Login:**  
+  `POST /api/users/login`
+- **Get Current User:**  
+  `GET /api/users/current`
+
+### **Client Management**
+- **Create a Client:**  
+  `POST /api/client`
+- **Client Registration (Mobile):**  
+  `POST /api/users/register/mobile`
+- **Client Login:**  
+  `POST /api/users/login`
+
+### **Food Item Management**
+- **Get all food items:**  
+  `GET /api/food`
+- **Get food items by Category:**  
+  `GET /api/food/category/<category>`
+- **Available categories:**  
+  `veg, meat, dairy, fruit, bnl, grains`
+- **Get food items by search term:**  
+  `GET /api/food/search/<search_term>`
+- **Create a Food Item:**  
+  `POST /api/fooditems`
+
+### **Meal Plan Management**
+- **Create a Meal Plan:**  
+  `POST /api/mealplan`
+- **Get Trainer's Meal Plans:**  
+  `GET /api/mealplan/trainer/<trainer_id>`
+- **Get Client's Meal Plans:**  
+  `GET /api/mealplan/client/<client_id>`
+- **Get Meal Plan by ID:**  
+  `GET /api/mealplan/<plan_id>`
+
+--
+## 🚀 Running the Application
+
+### **Frontend Setup**
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **Production Build**
+npm run build
+npm start
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment on Vercel
+Url https://front-end-app-nine.vercel.app/
