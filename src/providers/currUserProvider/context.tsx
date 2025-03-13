@@ -3,6 +3,7 @@ import { createContext } from 'react';
 
 
 export interface IUser {
+  data? :{
   id?: string,
   name?: string,
   email?: string,
@@ -15,6 +16,7 @@ export interface IUser {
   date: string,
 }
 
+}
 export interface ICurrentUserStateContext {
   readonly currentUser?: IUser;
   readonly iscurrPending: boolean;
@@ -23,7 +25,7 @@ export interface ICurrentUserStateContext {
 };
 
 export interface ICurrentUserActionContext {
-    getCurrentUser: () => Promise<void>;
+    getCurrentUser: () => void;
 
 };
 

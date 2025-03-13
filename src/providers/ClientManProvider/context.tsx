@@ -7,9 +7,9 @@ export interface IClient {
   email: string;
   contactNumber: string;
   sex: string;
-  DateOfBirth?: string;
+  dateOfBirth?: string;
   activeState: boolean;
-  readonly trainerId: string;
+  trainerId: string;
 }
 
 export interface IClientStateContext {
@@ -26,7 +26,7 @@ export const INITIAL_STATE: IClientStateContext = {
 };
 
 export interface IClientActionContext {
-  createClient: (payload: IClient) => void;
+  createClient: (ClientInfo: IClient) => void;
 }
 
 export const ClientStateContext =

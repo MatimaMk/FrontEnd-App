@@ -1,45 +1,62 @@
-import {
-  CurrentUserAction,
-  CurrentUserState,
-} from "@/providers/currUserProvider";
-import { useEffect } from "react";
+import React from 'react';
+import { Flex, Typography, Image } from 'antd';
+import { USECurrentuser } from "@/providers/currUserProvider";
+import { useStyles } from "./styles/style";
+import { useEffect } from 'react';
 
-const UserDetails = () => {
-  const { currentUser, iscurrPending, iscurrError } = CurrentUserState();
-  const { getCurrentUser } = CurrentUserAction();
+const Desc: React.FC<Readonly<{ text?: string | number }>> = (props) => (
+  <Flex justify="center" align="center" style={{ height: '100%' }}>
+    <Typography.Title type="secondary" level={5} style={{ whiteSpace: 'nowrap' }}>
+      {props.text}
+    </Typography.Title>
+  </Flex>
+);
+
+const UserDetails: React.FC = () => {
+  const { styles } = useStyles();
+  const { currentUser, iscurrError, getCurrentUser } = USECurrentuser();
+
+  const token = typeof window !== "undefined" ? sessionStorage.getItem("token") : null;
+
 
   useEffect(() => {
-    // Fetch the current user details on component mount
-    // No need to check if getCurrentUser exists, as it's guaranteed by the provider
-    getCurrentUser();
+    if (token) {
+      getCurrentUser();
+    }
   }, []);
 
-  if (iscurrPending) {
-    return <p>Loading user details...</p>;
-  }
-
   if (iscurrError) {
-    return <p>Failed to load user details. Please try again later.</p>;
+    return (
+      <div className={styles.noItemsMessage}>
+        Failed to load user details. Please try again later.
+      </div>
+    );
   }
 
   if (!currentUser) {
-    return <p>No user details available.</p>;
+    return (
+      <div className={styles.noItemsMessage}>
+        No user details available.
+      </div>
+    );
   }
 
-  const { name, id, email } = currentUser;
-
   return (
-    <div>
-      <h2>Current User Details</h2>
-      <p>
-        <strong>Name:</strong> {name}
-      </p>
-      <p>
-        <strong>ID:</strong> {id}
-      </p>
-      <p>
-        <strong>Email:</strong> {email}
-      </p>
+    <div className={styles.cardDiv}>
+      <div className={styles.card}>
+        <Typography.Title className={styles.title}>User Details</Typography.Title>
+        <Image
+          width={100}
+          src={'https://domf5oio6qrcr.cloudfront.net/medialibrary/4954/4965bf45-98cc-4d16-bae5-9f4b8503c5ed.jpg'}
+          alt="User Image"
+        />
+        <Desc text={`ID: ${currentUser.data?.id}`} />
+        <Desc text={`Email: ${currentUser.data?.email}`} />
+        <Desc text={`Role: ${currentUser.data?.role}`} />
+        <Desc text={`Contact Number: ${currentUser.data?.contactNumber}`} />
+        <Desc text={`Active State: ${currentUser.data?.activeState ? 'Active' : 'Inactive'}`} />
+        <Desc text={`Plan Type: ${currentUser.data?.planType}`} />
+      </div>
     </div>
   );
 };

@@ -93,13 +93,13 @@ const Register = () => {
     <div style={{ display: "flex", height: "100vh", alignItems: "center" }}>
       {/* Left Section: Image */}
       <div
-        style={{
-          flex: 1,
-          backgroundImage: `url('')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      ></div>
+  style={{
+    flex: 1,
+    backgroundImage: `url('https://diyglow.in/wp-content/uploads/2023/08/healthy-food.jpg')`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+></div>
 
       {/* Right Section: Register Form */}
       <div className={styles.card_div}>
